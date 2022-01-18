@@ -95,57 +95,7 @@ const History = (props) => {
       });
   };
 
-  // const removeFromCart = () => {
-  //   setDeleteButtonState(true);
-  //   axios
-  //     .post(`${NETWORK_URL}/client/update_cart`, {
-  //       product_id: "",
-  //       quantity: "",
-  //       add: false,
-  //       index: props.index,
-  //       is_qty: false,
-  //       idToken: window.localStorage.getItem("idToken"),
-  //       price: props.item.price,
-  //     })
-  //     .then((response) => {
-  //       // console.log(response.data);
-  //       window.location.reload();
-  //     })
-  //     .catch((error) => {
-  //       alert("hahaha \naaj ka din kharab he tera");
-  //       window.location.reload();
-  //     });
-  //   setDeleteButtonState(false);
-  // };
-
-  // const callDeletefunction = () => {
-  //   if (props.is_cart) {
-  //     removeFromCart();
-  //   } else {
-  //     deleteProduct();
-  //   }
-  // };
-
-  // const onQuantityChange = (event) => {
-
-  //   // const { name, value } = event.target;
-  //   axios
-  //     .post(`${NETWORK_URL}/client/update_cart`, {
-  //       product_id: "",
-  //       quantity: event.target.value,
-  //       add: false,
-  //       index: props.index,
-  //       is_qty: true,
-  //       idToken: window.localStorage.getItem("idToken"),
-  //       price: props.item.discount_price,
-  //     })
-  //     .then((response) => {
-  //       props.getAmount()
-  //     })
-  //     .catch((error) => {
-  //       console.log("hahahahahaha");
-  //     });
-  // };
+ 
 
   return (
     <Grid item sm={12} xs={12}>
@@ -180,11 +130,11 @@ const History = (props) => {
               <Typography variant="h6"> Qty : &nbsp;</Typography>
               <Box
                 component="select"
-                // onChange={onQuantityChange}
+                
                 sx={{
                   fontSize: "1.3rem",
                 }}
-                // defaultValue={`${props.is_cart ? props.qty : 1}`}
+                
               >
                 <Box component="option" value={1}>
                   1
@@ -226,7 +176,7 @@ const History = (props) => {
           )}
         </Grid>
         <Grid item md={2} sm={12} xs={12} sx={profileGridItem}>
-          {/* {props.is_cart || props.isSeller ? ( */}
+          
           <Box sx={cartButtons}>
             {deleteButtonState ? (
               <Box
@@ -246,12 +196,7 @@ const History = (props) => {
                 onClick={deleteProduct}
                 color="error"
                 sx={{
-                  // width: `${
-                  //   props.isSeller || props.is_cart ? "100%" : "30%"
-                  // }`,
-                  // height: `${
-                  //   props.isSeller || props.is_cart ? "auto" : "2rem"
-                  // }`,
+                 
                   width: "100%",
                   height: "auto",
                 }}
@@ -260,7 +205,7 @@ const History = (props) => {
                 <DeleteForeverIcon sx={{ color: "red" }} />
               </Button>
             )}
-            {/* {props.isSeller ? ( */}
+            
               <Button
                 variant="outlined"
                 onClick={gotoUpdate}
@@ -271,15 +216,10 @@ const History = (props) => {
               >
                 Update
               </Button>
-            {/* ) : null} */}
+            
           </Box>
           
-          {/* : (
-            <Typography sx={profileGridItemText} variant="h6">
-              {" "}
-              Date : 21-02-2021{" "}
-            </Typography>
-          )} */}
+          
         </Grid>
       </Grid>
     </Grid>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Grid, Typography, CircularProgress, Box } from "@mui/material";
 import History from "./History";
 import axios from "axios";
-// import { Box } from '@mui/system';
+
 import { NETWORK_URL } from "../links";
 
 const Panel = (props) => {

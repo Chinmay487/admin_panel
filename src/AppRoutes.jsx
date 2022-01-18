@@ -4,14 +4,15 @@ import Panel from "./seller/Panel";
 import ProductForm from "./seller/ProductForm";
 import DetailView from "./Product/DetailView";
 import ReviewPage from "./Product/ReviewPage";
+import ErrorPage from "./error/ErrorPage";
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route
         exact={true}
-        path="/panel"
-        element={<Panel isSeller={props.isSeller} />}
+        path="/"
+        element={<Panel  />}
       />
 
       <Route
@@ -29,6 +30,7 @@ const AppRoutes = () => {
       <Route exact={true} path="/detail/:key" element={<DetailView />} />
 
       <Route exact={true} path="/review/:key" element={<ReviewPage />} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 };

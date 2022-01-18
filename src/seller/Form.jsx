@@ -102,7 +102,7 @@ const Form = (props) => {
       .then((response) => {
         props.updateSpinnerState();
         alert(response.data);
-        navigate("/panel");
+        navigate("/");
       })
       .catch((error) => {
         alert("something went wrong");

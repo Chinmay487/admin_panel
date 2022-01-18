@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Grid, Typography, CircularProgress, Box } from "@mui/material";
-import History from "../user/History";
+import History from "./History";
 import axios from "axios";
 // import { Box } from '@mui/system';
 import { NETWORK_URL } from "../links";

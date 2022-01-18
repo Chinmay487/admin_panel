@@ -1,5 +1,7 @@
 import React from "react";
 import { Typography ,CssBaseline } from "@mui/material";
+import AppRoutes from "./AppRoutes";
+import "./index.css"
 const App = () => {
 
 const textStyle1 = {
@@ -12,7 +14,8 @@ const textStyle1 = {
     return (
         <>
         <CssBaseline/>
-        <Typography variant="h1" sx={textStyle1}>Hello world</Typography>
+        <AppRoutes/>
+        
         </>
     )
 

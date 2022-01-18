@@ -87,13 +87,13 @@ const DetailView = (props) => {
   const [index, setIndex] = useState(0);
   const [fetchStatus, setFetchStatus] = useState(true);
 
-  const [reviewData, setReviewData] = useState({
-    title: "",
-    description: "",
-    rating: 0,
-  });
+  // const [reviewData, setReviewData] = useState({
+  //   title: "",
+  //   description: "",
+  //   rating: 0,
+  // });
 
-  const [reviewFormStatus, setReviewFormStatus] = useState(false);
+  // const [reviewFormStatus, setReviewFormStatus] = useState(false);
 
   const fetchData = useCallback(
     (isMounted) => {
@@ -139,36 +139,36 @@ const DetailView = (props) => {
 
   // console.log(productData)
 
-  const onInputChange = (event) => {
-    const { name, value } = event.target;
-    setReviewData((oldvalue) => {
-      return {
-        ...oldvalue,
-        [name]: value,
-      };
-    });
-  };
+  // const onInputChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setReviewData((oldvalue) => {
+  //     return {
+  //       ...oldvalue,
+  //       [name]: value,
+  //     };
+  //   });
+  // };
 
-  const onReviewSubmit = (event) => {
-    event.preventDefault();
-    setReviewFormStatus(true);
-    const data = new FormData();
-    data.append("id", key);
-    data.append("title", reviewData.title);
-    data.append("description", reviewData.description);
-    data.append("rating", reviewData.rating);
-    axios
-      .post(`${NETWORK_URL}/client/review`, data)
-      .then((response) => {
-        alert(response.data);
-        setReviewFormStatus(false);
-        window.location.reload();
-      })
-      .catch((error) => {
-        alert("something went wrong");
-        window.location.reload();
-      });
-  };
+  // const onReviewSubmit = (event) => {
+  //   event.preventDefault();
+  //   setReviewFormStatus(true);
+  //   const data = new FormData();
+  //   data.append("id", key);
+  //   data.append("title", reviewData.title);
+  //   data.append("description", reviewData.description);
+  //   data.append("rating", reviewData.rating);
+  //   axios
+  //     .post(`${NETWORK_URL}/client/review`, data)
+  //     .then((response) => {
+  //       alert(response.data);
+  //       setReviewFormStatus(false);
+  //       window.location.reload();
+  //     })
+  //     .catch((error) => {
+  //       alert("something went wrong");
+  //       window.location.reload();
+  //     });
+  // };
 
   const navigate = useNavigate();
 
@@ -178,37 +178,37 @@ const DetailView = (props) => {
 
   const [selectState, setSelectState] = useState(1);
 
-  const addProductToCart = (message, cart) => {
-    axios
-      .post(`${NETWORK_URL}/client/update_cart`, {
-        product_id: key,
-        quantity: selectState,
-        add: true,
-        index: -1,
-        is_qty: false,
-        price: productData.discountPrice,
-        idToken: window.localStorage.getItem("idToken"),
-      })
-      .then((response) => {
-        // console.log(response.data)
-        if (cart) {
-          alert(message);
-        } else {
-          navigate("/viewcart");
-        }
-      })
-      .catch((error) => {
-        console.log("something went wrong");
-      });
-  };
+  // const addProductToCart = (message, cart) => {
+  //   axios
+  //     .post(`${NETWORK_URL}/client/update_cart`, {
+  //       product_id: key,
+  //       quantity: selectState,
+  //       add: true,
+  //       index: -1,
+  //       is_qty: false,
+  //       price: productData.discountPrice,
+  //       idToken: window.localStorage.getItem("idToken"),
+  //     })
+  //     .then((response) => {
+  //       // console.log(response.data)
+  //       if (cart) {
+  //         alert(message);
+  //       } else {
+  //         navigate("/viewcart");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log("something went wrong");
+  //     });
+  // };
 
-  const addToCart = () => {
-    addProductToCart("Added to your cart", true);
-  };
+  // const addToCart = () => {
+  //   addProductToCart("Added to your cart", true);
+  // };
 
-  const buyNow = () => {
-    addProductToCart("", false);
-  };
+  // const buyNow = () => {
+  //   addProductToCart("", false);
+  // };
 
   return (
     <>
@@ -329,7 +329,7 @@ const DetailView = (props) => {
                       </Box>
                     </Box>
                     <Box sx={gridBox2}>
-                      {window.localStorage.getItem("idToken") ? (
+                      {/* {window.localStorage.getItem("idToken") ? (
                         <>
                           <Button
                             variant="contained"
@@ -367,9 +367,9 @@ const DetailView = (props) => {
                             &nbsp; Add to Cart
                           </Button>
                         </>
-                      )}
+                      )} */}
 
-                      {props.isSeller ? (
+                      {/* {props.isSeller ? ( */}
                         <Button
                           variant="contained"
                           onClick={gotoUpdate}
@@ -377,7 +377,7 @@ const DetailView = (props) => {
                         >
                           Update
                         </Button>
-                      ) : null}
+                      {/* ) : null} */}
                     </Box>
                   </Box>
                 </Grid>
@@ -386,7 +386,7 @@ const DetailView = (props) => {
 
             <Grid item md={12} sx={{ backgroundColor: "#F5F5F5" }}>
               <Grid container spacing={3} sx={{ my: "2%" }}>
-                <Grid item md={5} sm={12} xs={12}>
+                {/* <Grid item md={5} sm={12} xs={12}>
                   <Box
                     component="form"
                     onSubmit={onReviewSubmit}
@@ -480,8 +480,8 @@ const DetailView = (props) => {
                       </>
                     )}
                   </Box>
-                </Grid>
-                <Grid item md={7}>
+                </Grid> */}
+                <Grid item md={12}>
                   <Review />
                   <Review />
                   <Button

@@ -21,7 +21,7 @@ const Form = (props) => {
     description: "",
     price: "",
     discount_price: "",
-    quantity: "",
+    quantity:10,
   });
 
   const [thumbnail, setThumbnail] = useState(null);
@@ -115,7 +115,7 @@ const Form = (props) => {
         variant="h5"
         sx={{
           textAlign: "center",
-          my: "1rem",
+          // my: "1rem",
         }}
         gutterBottom
       >
@@ -127,7 +127,7 @@ const Form = (props) => {
           color="error"
           sx={{
             textAlign: "center",
-            my: "1rem",
+            // my: "1rem",
             mx: "3%",
           }}
         >

@@ -97,9 +97,9 @@ const DetailView = (props) => {
 
   const getTimeInterval = useCallback((isMounted) => {
     if (isMounted) {
-      setInterval(() => {
+      setInterval((isMounted) => {
         const l = productData.productImages.length;
-        if (l > 0) {
+        if (l > 0 && isMounted) {
           setIndex((oldIndex) => {
             return (oldIndex + 1) % l;
           });

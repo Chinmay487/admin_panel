@@ -9,7 +9,6 @@ const App = () => {
         <CssBaseline/>
         <Navbar/>
         <AppRoutes/>
-        
         </>
     )
 

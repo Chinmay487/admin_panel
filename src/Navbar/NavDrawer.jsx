@@ -7,8 +7,7 @@ import {
   ListItemIcon,
   Button,
 } from "@mui/material";
-import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const NavDrawer = (props) => {
   const navigate = useNavigate();

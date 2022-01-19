@@ -5,7 +5,6 @@ import {
   Rating,
   Button,
   Grid,
-
   CircularProgress,
 } from "@mui/material";
 
@@ -15,7 +14,6 @@ import axios from "axios";
 import { NETWORK_URL } from "../links";
 
 const DetailView = (props) => {
-  
   const { key } = useParams();
 
   const gridBox2 = {
@@ -60,18 +58,6 @@ const DetailView = (props) => {
     },
   };
 
-  // const formStyle1 = {
-  //   display: "flex",
-  //   width: "90%",
-  //   mx: "auto",
-  //   height: "20rem",
-  //   padding: "1%",
-  //   backgroundColor: "#ECEFF1",
-  //   boxShadow: theme.shadows[7],
-  //   flexDirection: "column",
-  //   justifyContent: "space-evenly",
-  // };
-
   const [productData, setProductData] = useState({
     title: "",
     description: "",
@@ -84,7 +70,6 @@ const DetailView = (props) => {
   const [index, setIndex] = useState(0);
   const [fetchStatus, setFetchStatus] = useState(true);
 
- 
   const fetchData = useCallback(
     (isMounted) => {
       axios
@@ -110,34 +95,33 @@ const DetailView = (props) => {
     [key]
   );
 
+  const getTimeInterval = useCallback((isMounted) => {
+    if (isMounted) {
+      setInterval(() => {
+        const l = productData.productImages.length;
+        if (l > 0) {
+          setIndex((oldIndex) => {
+            return (oldIndex + 1) % l;
+          });
+        }
+      }, 6000);
+    }
+  },[productData.productImages.length]);
+
   useEffect(() => {
     let isMounted = true;
     fetchData(isMounted);
+    getTimeInterval(isMounted);
     return () => {
       isMounted = true;
     };
-  }, [fetchData]);
-
-  setInterval(() => {
-    const l = productData.productImages.length;
-    if (l > 0) {
-      setIndex((oldIndex) => {
-        return (oldIndex + 1) % l;
-      });
-    }
-  }, 6000);
-
-  
+  }, [fetchData,getTimeInterval]);
 
   const navigate = useNavigate();
 
   const gotoUpdate = () => {
     navigate(`/update/${key}`);
   };
-
-  
-
-  
 
   return (
     <>
@@ -158,7 +142,7 @@ const DetailView = (props) => {
         </>
       ) : (
         <>
-          <Grid container sx={{ mt: "10rem" }} rowGap={4}>
+          <Grid container sx={{ mt: "2rem" }} rowGap={4}>
             <Grid item md={12}>
               <Grid container columnGap={3}>
                 <Grid item md={4.5} sm={12} xs={12}>
@@ -218,7 +202,6 @@ const DetailView = (props) => {
                       <Typography variant="h6"> Qty : &nbsp;</Typography>
                       <Box
                         component="select"
-                        
                         sx={{
                           fontSize: "1.3rem",
                         }}
@@ -256,14 +239,13 @@ const DetailView = (props) => {
                       </Box>
                     </Box>
                     <Box sx={gridBox2}>
-                      
-                        <Button
-                          variant="contained"
-                          onClick={gotoUpdate}
-                          sx={buttonGroupStyle1}
-                        >
-                          Update
-                        </Button>
+                      <Button
+                        variant="contained"
+                        onClick={gotoUpdate}
+                        sx={buttonGroupStyle1}
+                      >
+                        Update
+                      </Button>
                       {/* ) : null} */}
                     </Box>
                   </Box>
@@ -273,7 +255,6 @@ const DetailView = (props) => {
 
             <Grid item md={12} sx={{ backgroundColor: "#F5F5F5" }}>
               <Grid container spacing={3} sx={{ my: "2%" }}>
-                
                 <Grid item md={12}>
                   <Review />
                   <Review />

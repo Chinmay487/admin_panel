@@ -30,7 +30,7 @@ const Panel = (props) => {
   }, [fetchData]);
 
   return (
-    <Box sx={{ mt: "10rem" }}>
+    <Box sx={{ mt: "2rem" }}>
       <Typography variant="h4" align="center" sx={{ my: "2%" }}>
         Your Products
       </Typography>

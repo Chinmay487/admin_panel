@@ -8,6 +8,7 @@ import {
   Button,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import {logoutUser} from "../authentication/auth";
 
 const NavDrawer = (props) => {
   const navigate = useNavigate();
@@ -23,6 +24,8 @@ const NavDrawer = (props) => {
 
   const onLogoutClick = () => {
     onClickEvent();
+    logoutUser();
+    navigate('/')
   };
 
   return (

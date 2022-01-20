@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Typography, TextField, Button, useTheme } from "@mui/material";
-import axios from "axios";
+import {loginUser} from '../authentication/auth'
 
 const Home = () => {
   const theme = useTheme();
@@ -22,7 +22,8 @@ const Home = () => {
   const onLoginFormSubmit = (event) => {
     event.preventDefault();
     alert("hahahahaha");
-    window.location.reload();
+    loginUser(adminFormData.email,adminFormData.password)
+    // window.location.reload();
   };
 
   return (

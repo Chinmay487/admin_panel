@@ -9,6 +9,7 @@ import { NavLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import NavDrawer from "./NavDrawer";
+import {logoutUser} from "../authentication/auth"
 
 const Navbar = () => {
   const theme = useTheme();
@@ -27,105 +28,109 @@ const Navbar = () => {
 
   return (
     <>
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          flexDirection: {
-            md: "row",
-            sm: "row",
-            xs: "column",
-          },
-          boxShadow: theme.shadows[5],
-          alignItems: "center",
-          padding: "5px",
-        }}
-      >
+      {
+        window.localStorage.getItem("idToken") ? <>
         <Box
           sx={{
-            display: {
-              xs: "flex",
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: {
+              md: "row",
+              sm: "row",
+              xs: "column",
             },
-            justifyContent: {
-              xs: "space-between",
-            },
-            width: {
-              md: "auto",
-              sm: "auto",
-              xs: "100%",
-            },
+            boxShadow: theme.shadows[5],
             alignItems: "center",
+            padding: "5px",
           }}
         >
-          <NavLink to="/" className="link">
-            <Typography
-              sx={{
-                color: "#546E7A",
-                mx: "1rem",
-              }}
-              variant="h5"
-            >
-              ShopHeaven
-            </Typography>
-          </NavLink>
-          <Button
-            variant="text"
+          <Box
             sx={{
-              cursor: "pointer",
               display: {
-                lg: "none",
-                md: "none",
-                sm: "none",
-                xs: "block",
+                xs: "flex",
               },
-              mx: "1rem",
-              fontSize: "1.5rem",
+              justifyContent: {
+                xs: "space-between",
+              },
+              width: {
+                md: "auto",
+                sm: "auto",
+                xs: "100%",
+              },
+              alignItems: "center",
             }}
-            onClick={onBurgerClick}
           >
-            {!burgerStatus ? <MenuIcon /> : <CloseIcon />}
-          </Button>
-        </Box>
-        <Box
-          component="ul"
-          sx={{
-            listStyle: "none",
-            display: {
-              md: "flex",
-              sm: "flex",
-              xs: "none",
-            },
-            margin: "auto 1rem",
-            alignItems: "center",
-            // border: "1px solid green",
-          }}
-        >
-          <Box component="li" sx={{ marginLeft: "1rem" }}>
             <NavLink to="/" className="link">
-              <Typography sx={{ color: "#546E7A" }}>Panel</Typography>
+              <Typography
+                sx={{
+                  color: "#546E7A",
+                  mx: "1rem",
+                }}
+                variant="h5"
+              >
+                ShopHeaven
+              </Typography>
             </NavLink>
+            <Button
+              variant="text"
+              sx={{
+                cursor: "pointer",
+                display: {
+                  lg: "none",
+                  md: "none",
+                  sm: "none",
+                  xs: "block",
+                },
+                mx: "1rem",
+                fontSize: "1.5rem",
+              }}
+              onClick={onBurgerClick}
+            >
+              {!burgerStatus ? <MenuIcon /> : <CloseIcon />}
+            </Button>
           </Box>
-          <Box component="li" sx={{ marginLeft: "1rem" }}>
-            <NavLink to="/queries" className="link">
-              <Typography sx={{ color: "#546E7A" }}>Queries</Typography>
-            </NavLink>
-          </Box>
-          <Box component="li" sx={{ marginLeft: "1rem" }}>
-            <NavLink to="/addproduct" className="link">
-              <Typography sx={{ color: "#546E7A" }}>New Product</Typography>
-            </NavLink>
-          </Box>
-          <Box component="li" sx={{ marginLeft: "1rem" }}>
-            <Button variant="contained">Logout</Button>
+          <Box
+            component="ul"
+            sx={{
+              listStyle: "none",
+              display: {
+                md: "flex",
+                sm: "flex",
+                xs: "none",
+              },
+              margin: "auto 1rem",
+              alignItems: "center",
+              // border: "1px solid green",
+            }}
+          >
+            <Box component="li" sx={{ marginLeft: "1rem" }}>
+              <NavLink to="/" className="link">
+                <Typography sx={{ color: "#546E7A" }}>Panel</Typography>
+              </NavLink>
+            </Box>
+            <Box component="li" sx={{ marginLeft: "1rem" }}>
+              <NavLink to="/queries" className="link">
+                <Typography sx={{ color: "#546E7A" }}>Queries</Typography>
+              </NavLink>
+            </Box>
+            <Box component="li" sx={{ marginLeft: "1rem" }}>
+              <NavLink to="/addproduct" className="link">
+                <Typography sx={{ color: "#546E7A" }}>New Product</Typography>
+              </NavLink>
+            </Box>
+            <Box component="li" sx={{ marginLeft: "1rem" }}>
+              <Button variant="contained" onClick={logoutUser}>Logout</Button>
+            </Box>
           </Box>
         </Box>
-      </Box>
-      <NavDrawer
-        burgerStatus={burgerStatus}
-        setBurgerStatus={setBurgerStatus}
-        handleDrawerOpen={handleDrawerOpen}
-      />
+        <NavDrawer
+          burgerStatus={burgerStatus}
+          setBurgerStatus={setBurgerStatus}
+          handleDrawerOpen={handleDrawerOpen}
+        />
+      </> : <></>
+      }
     </>
   );
 };

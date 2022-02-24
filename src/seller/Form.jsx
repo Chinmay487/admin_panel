@@ -7,7 +7,9 @@ import {
   Slider,
   Grid,
   useTheme,
-  // Snackbar
+  RadioGroup,
+  Radio,
+  FormControlLabel
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -23,12 +25,11 @@ const Form = (props) => {
     price: "",
     discount_price: "",
     quantity:10,
+    category:""
   });
 
   const [thumbnail, setThumbnail] = useState(null);
   const [productImages, setProductImages] = useState([]);
-  // const [snackbarOpen,setSnackbarOpen] = useState(false);
-  // [image]
 
   const addProductForm = {
     width: {
@@ -37,7 +38,7 @@ const Form = (props) => {
       sm: "90%",
       xs: "90%",
     },
-    height: "40rem",
+    height: "45rem",
     my: "1rem",
     mx: "auto",
     padding: "3%",
@@ -85,6 +86,7 @@ const Form = (props) => {
     data.append("title", productData.title);
     data.append("quantity", productData.quantity);
     data.append("thumbnail", thumbnail);
+    data.append("category",productData.category)
     productImages.forEach((file, index) => {
       let name = "image" + index;
       data.append(name, file);
@@ -114,12 +116,10 @@ const Form = (props) => {
 
   return (
     <>
-      {/* <Snackbar open={snackbarOpen} onClose={()=>{setSnackbarOpen(false)}} /> */}
       <Typography
         variant="h5"
         sx={{
           textAlign: "center",
-          // my: "1rem",
         }}
         gutterBottom
       >
@@ -131,7 +131,6 @@ const Form = (props) => {
           color="error"
           sx={{
             textAlign: "center",
-            // my: "1rem",
             mx: "3%",
           }}
         >
@@ -268,6 +267,27 @@ const Form = (props) => {
               </Typography>
             </>
           )}
+        </Box>
+
+        <Box component="div" sx={{
+          my:"0.7rem",
+          borderTop:"1px solid gray",
+          borderBottom:"1px solid gray"
+          }}>
+          <Typography variant="subtitle1">
+            Select Category
+          </Typography>
+              <RadioGroup
+                row
+                name="category"
+                onChange={onInputChange}
+              >
+                <FormControlLabel value="laptop" control={<Radio/>} label="laptop" />
+                <FormControlLabel value="iphone" control={<Radio/>} label="iphone" />
+                <FormControlLabel value="camera" control={<Radio/>} label="camera" />
+                <FormControlLabel value="watch" control={<Radio/>} label="watch" />
+                <FormControlLabel value="clock" control={<Radio/>} label="clock" />
+              </RadioGroup>    
         </Box>
 
         <Button

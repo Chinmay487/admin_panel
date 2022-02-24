@@ -8,25 +8,31 @@ import { NETWORK_URL } from "../links";
 const Panel = (props) => {
   const [dataList, setDataList] = useState([]);
 
-  const [len, setLen] = useState(false);
+  // const [len, setLen] = useState(false);
 
-  const fetchData = useCallback(() => {
-    axios
+  const fetchData = useCallback((isMounted) => {
+    if(isMounted){
+      axios
       .get(`${NETWORK_URL}/seller/panel`)
       .then((response) => response.data)
       .then((data) => {
         if (data.length > 0) {
           setDataList([...data]);
         }
-        setLen(data.length > 0);
       })
       .catch((error) => {
         alert("something went wrong");
       });
+    }
   }, []);
 
   useEffect(() => {
-    fetchData();
+    let isMounted = true;
+    fetchData(isMounted);
+    return () => {
+      isMounted = false;
+      setDataList([])
+    }
   }, [fetchData]);
 
   return (
@@ -49,7 +55,7 @@ const Panel = (props) => {
         </Box>
       ) : (
         <>
-          {!len ? (
+          {!dataList.length > 0 ? (
             <Box
               sx={{
                 width: "100%",
@@ -81,6 +87,7 @@ const Panel = (props) => {
                     isSeller={props.isSeller}
                     item={item}
                     key={item.key}
+                    fetchData={fetchData}
                   />
                 );
               })}

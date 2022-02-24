@@ -44,19 +44,19 @@ const History = (props) => {
     },
   };
 
-  const quantity = {
-    px: {
-      lg: "0",
-      md: "0",
-      sm: "5%",
-      xs: "5%",
-    },
-    py: "2%",
-    width: "100%",
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "center",
-  };
+  // const quantity = {
+  //   px: {
+  //     lg: "0",
+  //     md: "0",
+  //     sm: "5%",
+  //     xs: "5%",
+  //   },
+  //   py: "2%",
+  //   width: "100%",
+  //   display: "flex",
+  //   justifyContent: "flex-start",
+  //   alignItems: "center",
+  // };
 
   const cartButtons = {
     width: "100%",
@@ -86,12 +86,11 @@ const History = (props) => {
       .post(`${NETWORK_URL}/seller/deleteproduct`, data)
       .then((response) => {
         setDeleteButtonState(false);
-        alert(response.data);
-        window.location.reload();
+        props.fetchData(true)
       })
       .catch((error) => {
         alert("Something went wrong");
-        window.location.reload();
+        props.fetchData(true)
       });
   };
 
@@ -125,55 +124,12 @@ const History = (props) => {
             {" "}
             Price : {props.item.price}{" "}
           </Typography>
-          {props.is_cart ? (
-            <Box sx={quantity}>
-              <Typography variant="h6"> Qty : &nbsp;</Typography>
-              <Box
-                component="select"
-                
-                sx={{
-                  fontSize: "1.3rem",
-                }}
-                
-              >
-                <Box component="option" value={1}>
-                  1
-                </Box>
-                <Box component="option" value={2}>
-                  2
-                </Box>
-                <Box component="option" value={3}>
-                  3
-                </Box>
-                <Box component="option" value={4}>
-                  4
-                </Box>
-                <Box component="option" value={5}>
-                  5
-                </Box>
-                <Box component="option" value={7}>
-                  7
-                </Box>
-                <Box component="option" value={6}>
-                  6
-                </Box>
-                <Box component="option" value={8}>
-                  8
-                </Box>
-                <Box component="option" value={9}>
-                  9
-                </Box>
-                <Box component="option" value={10}>
-                  10
-                </Box>
-              </Box>
-            </Box>
-          ) : (
+    
             <Typography sx={profileGridItemText} variant="h6">
               {" "}
               Qty : {props.item.quantity}{" "}
             </Typography>
-          )}
+          
         </Grid>
         <Grid item md={2} sm={12} xs={12} sx={profileGridItem}>
           
@@ -205,7 +161,6 @@ const History = (props) => {
                 <DeleteForeverIcon sx={{ color: "red" }} />
               </Button>
             )}
-            
               <Button
                 variant="outlined"
                 onClick={gotoUpdate}
@@ -216,10 +171,7 @@ const History = (props) => {
               >
                 Update
               </Button>
-            
           </Box>
-          
-          
         </Grid>
       </Grid>
     </Grid>

@@ -54,11 +54,13 @@ export const loginUser = async (email, password) => {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      console.log(user);
+      // console.log(user);
       saveData(keys);
     })
     .catch((error) => {
-      console.log("login error");
+      // console.log("login error");
+      alert("Something went wrong")
+      window.location.reload()
       // ..
     });
 };
@@ -75,6 +77,8 @@ export const logoutUser = async () => {
       window.location.reload();
     })
     .catch((error) => {
-      console.log("firebase error");
+      // console.log("firebase error");
+      alert("Something went wrong")
+      window.location.reload()
     });
 };

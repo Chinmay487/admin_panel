@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Button, useTheme } from "@mui/material";
+import { Box, Typography, TextField, Button, useTheme,CircularProgress } from "@mui/material";
 import {loginUser} from '../authentication/auth'
 
 const Home = () => {
@@ -8,6 +8,8 @@ const Home = () => {
     email: "",
     password: "",
   });
+
+  const [buttonProgress,setButtonProgress] = useState(false)
 
   const onLoginInputChange = (event) => {
     const { name, value } = event.target;
@@ -21,8 +23,9 @@ const Home = () => {
 
   const onLoginFormSubmit = (event) => {
     event.preventDefault();
-    alert("hahahahaha");
-    loginUser(adminFormData.email,adminFormData.password)
+    // alert("hahahahaha");
+    setButtonProgress(true);
+    loginUser(adminFormData.email,adminFormData.password);
     // window.location.reload();
   };
 
@@ -71,7 +74,8 @@ const Home = () => {
         onChange={onLoginInputChange}
         required={true}
       />
-      <Button
+      {
+        !buttonProgress ? <Button
         variant="outlined"
         sx={{
           width: "50%",
@@ -80,7 +84,10 @@ const Home = () => {
         type="submit"
       >
         Login
-      </Button>
+      </Button> : <Box sx={{width:"50%",mx:"auto"}}>
+        <CircularProgress/>
+      </Box>
+      }
     </Box>
   );
 };

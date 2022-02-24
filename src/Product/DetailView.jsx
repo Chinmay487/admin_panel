@@ -199,44 +199,6 @@ const DetailView = (props) => {
                         alignItems: "center",
                       }}
                     >
-                      <Typography variant="h6"> Qty : &nbsp;</Typography>
-                      <Box
-                        component="select"
-                        sx={{
-                          fontSize: "1.3rem",
-                        }}
-                      >
-                        <Box component="option" value={1} selectteed>
-                          1
-                        </Box>
-                        <Box component="option" value={2} selectteed>
-                          2
-                        </Box>
-                        <Box component="option" value={3} selectteed>
-                          3
-                        </Box>
-                        <Box component="option" value={4} selectteed>
-                          4
-                        </Box>
-                        <Box component="option" value={5} selectteed>
-                          5
-                        </Box>
-                        <Box component="option" value={6} selectteed>
-                          6
-                        </Box>
-                        <Box component="option" value={7} selectteed>
-                          7
-                        </Box>
-                        <Box component="option" value={8} selectteed>
-                          8
-                        </Box>
-                        <Box component="option" value={9} selectteed>
-                          9
-                        </Box>
-                        <Box component="option" value={10} selectteed>
-                          10
-                        </Box>
-                      </Box>
                     </Box>
                     <Box sx={gridBox2}>
                       <Button

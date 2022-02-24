@@ -7,6 +7,7 @@ import {
   Slider,
   Grid,
   useTheme,
+  // Snackbar
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -26,6 +27,7 @@ const Form = (props) => {
 
   const [thumbnail, setThumbnail] = useState(null);
   const [productImages, setProductImages] = useState([]);
+  // const [snackbarOpen,setSnackbarOpen] = useState(false);
   // [image]
 
   const addProductForm = {
@@ -101,7 +103,8 @@ const Form = (props) => {
       })
       .then((response) => {
         props.updateSpinnerState();
-        alert(response.data);
+        // alert(response.data);
+        // setSnackbarOpen(true)
         navigate("/");
       })
       .catch((error) => {
@@ -111,6 +114,7 @@ const Form = (props) => {
 
   return (
     <>
+      {/* <Snackbar open={snackbarOpen} onClose={()=>{setSnackbarOpen(false)}} /> */}
       <Typography
         variant="h5"
         sx={{

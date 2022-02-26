@@ -14,7 +14,7 @@ import axios from "axios";
 import { NETWORK_URL } from "../links";
 
 const DetailView = (props) => {
-  const { key } = useParams();
+  const { category,key } = useParams();
 
   const gridBox2 = {
     display: "flex",
@@ -73,7 +73,7 @@ const DetailView = (props) => {
   const fetchData = useCallback(
     (isMounted) => {
       axios
-        .get(`${NETWORK_URL}/client/detail/${key}`)
+        .get(`${NETWORK_URL}/client/detail/${category}/${key}`)
         .then((response) => response.data)
         .then((data) => {
           if (isMounted) {
@@ -92,7 +92,7 @@ const DetailView = (props) => {
           alert("something went wrong");
         });
     },
-    [key]
+    [key,category]
   );
 
   const getTimeInterval = useCallback((isMounted) => {
@@ -120,7 +120,7 @@ const DetailView = (props) => {
   const navigate = useNavigate();
 
   const gotoUpdate = () => {
-    navigate(`/update/${key}`);
+    navigate(`/update/${category}/${key}`);
   };
 
   return (
@@ -227,7 +227,7 @@ const DetailView = (props) => {
                       mx: "auto",
                     }}
                     onClick={() => {
-                      navigate(`/review/${key}`);
+                      navigate(`/review/${category}/${key}`);
                     }}
                   >
                     View More

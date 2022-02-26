@@ -82,19 +82,18 @@ const History = (props) => {
     setDeleteButtonState(true);
     const data = new FormData();
     data.append("id", props.item.key);
+    data.append("category",props.category)
     axios
       .post(`${NETWORK_URL}/seller/deleteproduct`, data)
       .then((response) => {
         setDeleteButtonState(false);
-        props.fetchData(true)
+        props.fetchData(0)
       })
       .catch((error) => {
         alert("Something went wrong");
-        props.fetchData(true)
+        props.fetchData(0)
       });
   };
-
- 
 
   return (
     <Grid item sm={12} xs={12}>
@@ -115,7 +114,7 @@ const History = (props) => {
           </Box>
         </Grid>
         <Grid item md={7} sm={12} xs={12} sx={profileGridItem}>
-          <Link to={`/detail/${props.item.key}`} className="link">
+          <Link to={`/detail/${props.category}/${props.item.key}`} className="link">
             <Typography sx={profileGridItemText} variant="h6">
               {props.item.title}
             </Typography>

@@ -7,7 +7,7 @@ import ReviewCard from "./ReviewCard";
 
 // viewreview
 const ReviewPage = () => {
-  const { key } = useParams();
+  const { category,key } = useParams();
   const [fetchStatus, setFetchStatus] = useState(false);
   const [noReview, setNoReview] = useState(false);
   const [reviewArray, setReviewArray] = useState([]);
@@ -15,7 +15,7 @@ const ReviewPage = () => {
   const fetchReviews = useCallback(() => {
     setFetchStatus(true);
     axios
-      .get(`${NETWORK_URL}/client/viewreview/${key}`)
+      .get(`${NETWORK_URL}/client/viewreview/${category}/${key}`)
       .then((response) => {
         setNoReview(response.data.length === 0);
         // console.log(response.data);

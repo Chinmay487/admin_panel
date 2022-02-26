@@ -9,7 +9,7 @@ import {
   useTheme,
   RadioGroup,
   Radio,
-  FormControlLabel
+  FormControlLabel,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -24,8 +24,8 @@ const Form = (props) => {
     description: "",
     price: "",
     discount_price: "",
-    quantity:10,
-    category:""
+    quantity: 10,
+    category: "",
   });
 
   const [thumbnail, setThumbnail] = useState(null);
@@ -86,7 +86,7 @@ const Form = (props) => {
     data.append("title", productData.title);
     data.append("quantity", productData.quantity);
     data.append("thumbnail", thumbnail);
-    data.append("category",productData.category)
+    data.append("category", productData.category);
     productImages.forEach((file, index) => {
       let name = "image" + index;
       data.append(name, file);
@@ -269,26 +269,52 @@ const Form = (props) => {
           )}
         </Box>
 
-        <Box component="div" sx={{
-          my:"0.7rem",
-          borderTop:"1px solid gray",
-          borderBottom:"1px solid gray"
-          }}>
-          <Typography variant="subtitle1">
-            Select Category
-          </Typography>
+        {!props.isUpdate ? (
+          <>
+            <Box
+              component="div"
+              sx={{
+                my: "0.7rem",
+                borderTop: "1px solid gray",
+                borderBottom: "1px solid gray",
+              }}
+            >
+              <Typography variant="subtitle1">Select Category</Typography>
               <RadioGroup
                 row
                 name="category"
                 onChange={onInputChange}
+                required={!props.isUpdate}
               >
-                <FormControlLabel value="laptop" control={<Radio/>} label="laptop" />
-                <FormControlLabel value="iphone" control={<Radio/>} label="iphone" />
-                <FormControlLabel value="camera" control={<Radio/>} label="camera" />
-                <FormControlLabel value="watch" control={<Radio/>} label="watch" />
-                <FormControlLabel value="clock" control={<Radio/>} label="clock" />
-              </RadioGroup>    
-        </Box>
+                <FormControlLabel
+                  value="laptop"
+                  control={<Radio required={!props.isUpdate} />}
+                  label="laptop"
+                />
+                <FormControlLabel
+                  value="iphone"
+                  control={<Radio required={!props.isUpdate} />}
+                  label="iphone"
+                />
+                <FormControlLabel
+                  value="camera"
+                  control={<Radio required={!props.isUpdate} />}
+                  label="camera"
+                />
+                <FormControlLabel
+                  value="watch"
+                  control={<Radio required={!props.isUpdate} />}
+                  label="watch"
+                />
+                <FormControlLabel
+                  value="clock"
+                  control={<Radio required={!props.isUpdate} />}
+                  label="clock"
+                />
+              </RadioGroup>
+            </Box>
+          </>
+        ) : null}
 
         <Button
           variant="contained"

@@ -1,6 +1,5 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Panel from "./seller/Panel";
 import Home from "./home/Home";
 import ProductForm from "./seller/ProductForm";
 import DetailView from "./Product/DetailView";
@@ -13,7 +12,7 @@ const AppRoutes = () => {
       <Route
         exact={true}
         path="/"
-        element={window.localStorage.getItem("idToken") ? <Panel /> : <Home />}
+        element={<Home />}
       />
       {window.localStorage.getItem("idToken") ? (
         <>
@@ -29,9 +28,9 @@ const AppRoutes = () => {
             element={<ProductForm isUpdate={false} />}
           />
 
-          <Route exact={true} path="/detail/:key" element={<DetailView />} />
+          <Route exact={true} path="/detail/:category/:key" element={<DetailView />} />
 
-          <Route exact={true} path="/review/:key" element={<ReviewPage />} />
+          <Route exact={true} path="/review/:category/:key" element={<ReviewPage />} />
         </>
       ) : null}
       <Route path="*" element={<ErrorPage />} />

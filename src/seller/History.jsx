@@ -82,7 +82,8 @@ const History = (props) => {
     setDeleteButtonState(true);
     const data = new FormData();
     data.append("id", props.item.key);
-    data.append("category",props.category)
+    data.append("category",props.category);
+    data.append("idToken",window.localStorage.getItem("idToken"))
     axios
       .post(`${NETWORK_URL}/seller/deleteproduct`, data)
       .then((response) => {

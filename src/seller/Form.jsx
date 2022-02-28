@@ -87,6 +87,7 @@ const Form = (props) => {
     data.append("quantity", productData.quantity);
     data.append("thumbnail", thumbnail);
     data.append("category", productData.category);
+    data.append("idToken",window.localStorage.getItem("idToken"))
     productImages.forEach((file, index) => {
       let name = "image" + index;
       data.append(name, file);

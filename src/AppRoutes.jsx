@@ -5,15 +5,12 @@ import ProductForm from "./seller/ProductForm";
 import DetailView from "./Product/DetailView";
 import ReviewPage from "./Product/ReviewPage";
 import ErrorPage from "./error/ErrorPage";
+import Queries from './queries/Queries'
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route
-        exact={true}
-        path="/"
-        element={<Home />}
-      />
+      <Route exact={true} path="/" element={<Home />} />
       {window.localStorage.getItem("idToken") ? (
         <>
           <Route
@@ -28,9 +25,23 @@ const AppRoutes = () => {
             element={<ProductForm isUpdate={false} />}
           />
 
-          <Route exact={true} path="/detail/:category/:key" element={<DetailView />} />
+          <Route
+            exact={true}
+            path="/queries"
+            element={<Queries />}
+          />
 
-          <Route exact={true} path="/review/:category/:key" element={<ReviewPage />} />
+          <Route
+            exact={true}
+            path="/detail/:category/:key"
+            element={<DetailView />}
+          />
+
+          <Route
+            exact={true}
+            path="/review/:category/:key"
+            element={<ReviewPage />}
+          />
         </>
       ) : null}
       <Route path="*" element={<ErrorPage />} />

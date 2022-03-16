@@ -3,7 +3,6 @@ import {
   Typography,
   Box,
   Button,
-  useTheme,
   CircularProgress,
 } from "@mui/material";
 import axios from "axios";
@@ -12,7 +11,6 @@ import QueryInfo from "./QueryInfo";
 
 const Queries = () => {
   const [shippingStatus, setShippingStatus] = useState("pending");
-  const theme = useTheme();
 
   const [shippingData, setShippingData] = useState([]);
   const [dataStatus, setDataStatus] = useState(false);
@@ -26,8 +24,9 @@ const Queries = () => {
           idToken: window.localStorage.getItem("idToken"),
         })
         .then((response) => {
-          // console.log(response.data)
+          console.log(response.data)
           if (response.data.length > 0) {
+            
             setShippingData([...response.data]);
           }
           setIsData(response.data.length);
@@ -54,6 +53,7 @@ const Queries = () => {
         <Button
           onClick={() => {
             setShippingStatus("pending");
+            setDataStatus(false);
             fetchData(true, "pending");
           }}
           variant="text"
@@ -64,6 +64,7 @@ const Queries = () => {
         <Button
           onClick={() => {
             setShippingStatus("dispatched");
+            setDataStatus(false);
             fetchData(true, "dispatched");
           }}
           disabled={shippingStatus === "dispatched"}
@@ -73,49 +74,32 @@ const Queries = () => {
         <Button
           onClick={() => {
             setShippingStatus("delivered");
+            setDataStatus(false);
             fetchData(true, "delivered");
           }}
           disabled={shippingStatus === "delivered"}
         >
           Delivered
         </Button>
-        <Button
-          onClick={() => {
-            setShippingStatus("cancled");
-            fetchData(true, "cancled");
-          }}
-          disabled={shippingStatus === "cancled"}
-        >
-          Cancled
-        </Button>
       </Box>
       {dataStatus ? (
-        <Box>
-          <Typography> Loading</Typography>...
+        <Box component="center" sx={{display:"flex",justifyContent:"center",alignItems:"center",my:"1rem"}} >
+          <Typography variant="h5"> Loading...</Typography> &nbsp; 
           <CircularProgress />
         </Box>
       ) : (
-        <Box
-          sx={{
-            width: {
-              lg: "50%",
-              md: "50%",
-              sm: "100%",
-              xs: "100%",
-            },
-            border: "1px solid #CFD8DC",
-            boxShadow: theme.shadows[5],
-            margin: "0.5rem auto",
-          }}
-        >
+        <Box>
           {isData > 0 ? (
             <>
               {shippingData.map((item, index) => {
+                console.log(item)
                 return (
                   <>
                     <QueryInfo
                       item={item}
+                      fetchData={fetchData}
                       key={`shipping_${shippingStatus}${index}0`}
+                      status={shippingStatus}
                     />
                   </>
                 );

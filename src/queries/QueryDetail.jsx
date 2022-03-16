@@ -10,14 +10,13 @@ const QueryDetail = (props) => {
       if(deliveryDate !== ""){
         axios.post(`${NETWORK_URL}/seller/dispatch`,{
             idToken : window.localStorage.getItem("idToken"),
-            uid : props.item.uid,
-            delivery_date : deliveryDate,
-            address : props.item.address,
-            products : props.item.products
+            order_date_by_seller : deliveryDate,
+            user_info : props.item
         })
         .then((response)=>{
             console.log(response.data)
             props.changeQueryDetailstatus()
+            props.fetchData()
         })
         .catch((error)=>{
              console.log("something went wrong");
@@ -26,7 +25,7 @@ const QueryDetail = (props) => {
     }
 
   const onDateChange = (event) => {
-    const {value } = event.target;
+    const {value} = event.target;
     setDelivaryDate(value);
   };
   console.log(deliveryDate);
@@ -80,16 +79,16 @@ const QueryDetail = (props) => {
             </Box>
             <Typography>
               {" "}
-              Address Line 1 : {props.item.address.line1}{" "}
+              Address Line 1 : {props.item.shipping_address.line1}{" "}
             </Typography>
             <Typography>
               {" "}
-              Address Line 2 : {props.item.address.line2}{" "}
+              Address Line 2 : {props.item.shipping_address.line2}{" "}
             </Typography>
-            <Typography> City : {props.item.address.city} </Typography>
-            <Typography> District : {props.item.address.district} </Typography>
-            <Typography> State : {props.item.address.state} </Typography>
-            <Typography> Pincode : {props.item.address.pin} </Typography>
+            <Typography> City : {props.item.shipping_address.city} </Typography>
+            <Typography> District : {props.item.shipping_address.district} </Typography>
+            <Typography> State : {props.item.shipping_address.state} </Typography>
+            <Typography> Pincode : {props.item.shipping_address.pin} </Typography>
           </Box>
         </Box>
         <Box
@@ -115,12 +114,14 @@ const QueryDetail = (props) => {
               type="date"
               name="deliveryDate"
               id="deliveryDate"
+              // min={new Date().toDateString}
+              value={deliveryDate}
               onChange={onDateChange}
             />
             <Button onClick={onConfirmDispatch} >Confirm date</Button>
           </Box>
-          <Typography>OR</Typography>
-          <Button>Cancle Order</Button> 
+          {/* <Typography>OR</Typography>
+          <Button>Cancle Order</Button>  */}
         </Box>
       </Dialog>
     </>

@@ -24,7 +24,7 @@ const Queries = () => {
           idToken: window.localStorage.getItem("idToken"),
         })
         .then((response) => {
-          console.log(response.data)
+          // console.log(response.data)
           if (response.data.length > 0) {
             
             setShippingData([...response.data]);
@@ -48,7 +48,7 @@ const Queries = () => {
 
   return (
     <>
-      <Typography>Queries Page</Typography>
+
       <Box component="center">
         <Button
           onClick={() => {
@@ -92,7 +92,6 @@ const Queries = () => {
           {isData > 0 ? (
             <>
               {shippingData.map((item, index) => {
-                console.log(item)
                 return (
                   <>
                     <QueryInfo

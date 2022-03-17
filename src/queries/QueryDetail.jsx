@@ -1,34 +1,106 @@
 import React, { useState } from "react";
-import { Box, Typography, Dialog, Button } from "@mui/material";
-import axios from 'axios';
+import {
+  Box,
+  Typography,
+  Dialog,
+  Button,
+  // breadcrumbsClasses,
+} from "@mui/material";
+import axios from "axios";
 import { NETWORK_URL } from "../links";
 
 const QueryDetail = (props) => {
   const [deliveryDate, setDelivaryDate] = useState("");
 
-    const onConfirmDispatch = () => {
-      if(deliveryDate !== ""){
-        axios.post(`${NETWORK_URL}/seller/dispatch`,{
-            idToken : window.localStorage.getItem("idToken"),
-            order_date_by_seller : deliveryDate,
-            user_info : props.item
+  const onConfirmDispatch = () => {
+    if (deliveryDate !== "") {
+      axios
+        .post(`${NETWORK_URL}/seller/dispatch`, {
+          idToken: window.localStorage.getItem("idToken"),
+          order_date_by_seller: deliveryDate,
+          user_info: props.item,
         })
-        .then((response)=>{
-            console.log(response.data)
-            props.changeQueryDetailstatus()
-            props.fetchData()
+        .then((response) => {
+          console.log(response.data);
+          props.changeQueryDetailstatus();
+          props.fetchData(true, props.status);
         })
-        .catch((error)=>{
-             console.log("something went wrong");
-        })
-      }
+        .catch((error) => {
+          console.log("something went wrong");
+        });
     }
+  };
+
+  const onConfirmDelivered = () => {
+    axios
+      .post(`${NETWORK_URL}/seller/delivered`, {
+        idToken: window.localStorage.getItem("idToken"),
+        // order_date_by_seller: deliveryDate,
+        user_data: props.item,
+      })
+      .then((response) => {
+        console.log(response.data);
+        props.changeQueryDetailstatus();
+        props.fetchData(true, props.status);
+      })
+      .catch((error) => {
+        console.log("something went wrong");
+      });
+  };
 
   const onDateChange = (event) => {
-    const {value} = event.target;
+    const { value } = event.target;
     setDelivaryDate(value);
   };
-  console.log(deliveryDate);
+
+  let city = "";
+  let state = "";
+  let district = "";
+  let line1 = "";
+  let line2 = "";
+  let pin = "";
+  let prod_array = [];
+  let total = 0;
+  let payment_date = "";
+
+  switch (props.status) {
+    case "pending":
+      city = props.item.shipping_address.city;
+      state = props.item.shipping_address.state;
+      district = props.item.shipping_address.district;
+      line1 = props.item.shipping_address.line1;
+      line2 = props.item.shipping_address.line2;
+      pin = props.item.shipping_address.pin;
+      prod_array = props.item.products;
+      total = props.item.total;
+      payment_date = props.item.payment_date;
+      break;
+    case "dispatched":
+      city = props.item.user_info.shipping_address.city;
+      state = props.item.user_info.shipping_address.state;
+      district = props.item.user_info.shipping_address.district;
+      line1 = props.item.user_info.shipping_address.line1;
+      line2 = props.item.user_info.shipping_address.line2;
+      pin = props.item.user_info.shipping_address.pin;
+      prod_array = props.item.user_info.products;
+      total = props.item.user_info.total;
+      payment_date = props.item.user_info.payment_date;
+      break;
+    case "delivered":
+      city = props.item.user_info.shipping_address.city;
+      state = props.item.user_info.shipping_address.state;
+      district = props.item.user_info.shipping_address.district;
+      line1 = props.item.user_info.shipping_address.line1;
+      line2 = props.item.user_info.shipping_address.line2;
+      pin = props.item.user_info.shipping_address.pin;
+      prod_array = props.item.user_info.products;
+      total = props.item.user_info.total;
+      payment_date = props.item.user_info.payment_date;
+      break;
+    default:
+      break;
+  }
+
   return (
     <>
       <Dialog fullWidth open={props.querydetailOpen}>
@@ -51,15 +123,20 @@ const QueryDetail = (props) => {
               mx: "auto",
             }}
           >
-            {props.item.products.map((product, index) => {
+            {prod_array.map((product, index) => {
               return (
                 <Typography key={`seller${product}${index}`}>
                   {product}
                 </Typography>
               );
             })}
-            <Typography>Price : &#x20B9;{props.item.total}</Typography>
-            <Typography>Payment Date : {props.item.payment_date}</Typography>
+            <Typography>Price : &#x20B9;{total}</Typography>
+            <Typography>Payment Date : {payment_date}</Typography>
+            {props.status === "dispatched" || props.status === "delivered" ? (
+              <Typography>
+                Delivery Date : {props.item.delivery_date}
+              </Typography>
+            ) : null}
           </Box>
           <Box
             component="fieldset"
@@ -77,18 +154,12 @@ const QueryDetail = (props) => {
             <Box component="legend">
               <Typography>Address</Typography>
             </Box>
-            <Typography>
-              {" "}
-              Address Line 1 : {props.item.shipping_address.line1}{" "}
-            </Typography>
-            <Typography>
-              {" "}
-              Address Line 2 : {props.item.shipping_address.line2}{" "}
-            </Typography>
-            <Typography> City : {props.item.shipping_address.city} </Typography>
-            <Typography> District : {props.item.shipping_address.district} </Typography>
-            <Typography> State : {props.item.shipping_address.state} </Typography>
-            <Typography> Pincode : {props.item.shipping_address.pin} </Typography>
+            <Typography> Address Line 1 : {line1} </Typography>
+            <Typography> Address Line 2 : {line2} </Typography>
+            <Typography> City : {city} </Typography>
+            <Typography> District : {district} </Typography>
+            <Typography> State : {state} </Typography>
+            <Typography> Pincode : {pin} </Typography>
           </Box>
         </Box>
         <Box
@@ -98,30 +169,36 @@ const QueryDetail = (props) => {
             my: "0.5rem",
             display: "flex",
             justifyContent: "space-evenly",
-            flexDirection:"column",
-            alignItems:"center"
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-            <Box sx={{
-              width:"90%",
-              mx:"auto",
-              my:"0.4rem",
-              display:"flex",
-              justifyContent:"center"
-          }}>
-            <Box
-              component="input"
-              type="date"
-              name="deliveryDate"
-              id="deliveryDate"
-              // min={new Date().toDateString}
-              value={deliveryDate}
-              onChange={onDateChange}
-            />
-            <Button onClick={onConfirmDispatch} >Confirm date</Button>
+          <Box
+            sx={{
+              width: "90%",
+              mx: "auto",
+              my: "0.4rem",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            {props.status === "pending" ? (
+              <>
+                <Box
+                  component="input"
+                  type="date"
+                  name="deliveryDate"
+                  id="deliveryDate"
+                  value={deliveryDate}
+                  onChange={onDateChange}
+                />
+                <Button onClick={onConfirmDispatch}>Confirm date</Button>
+              </>
+            ) : null}
+            {props.status === "dispatched" ? (
+              <Button onClick={onConfirmDelivered}>Mark Delivered</Button>
+            ) : null}
           </Box>
-          {/* <Typography>OR</Typography>
-          <Button>Cancle Order</Button>  */}
         </Box>
       </Dialog>
     </>

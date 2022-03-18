@@ -75,7 +75,7 @@ const History = (props) => {
   const navigate = useNavigate();
 
   const gotoUpdate = () => {
-    navigate(`/update/${props.item.key}`);
+    navigate(`/update/${props.category}/${props.item.key}`);
   };
 
   const deleteProduct = () => {
@@ -85,14 +85,14 @@ const History = (props) => {
     data.append("category",props.category);
     data.append("idToken",window.localStorage.getItem("idToken"))
     axios
-      .post(`${NETWORK_URL}/seller/deleteproduct`, data)
+      .post(`${NETWORK_URL}/seller/deleteproduct/${props.pageNumber}`, data)
       .then((response) => {
         setDeleteButtonState(false);
-        props.fetchData(0)
+        props.fetchData(0,props.pageNumber)
       })
       .catch((error) => {
         alert("Something went wrong");
-        props.fetchData(0)
+        props.fetchData(0,props.pageNumber)
       });
   };
 

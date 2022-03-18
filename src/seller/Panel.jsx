@@ -1,30 +1,42 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Grid, Typography, CircularProgress, Box, Button } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  CircularProgress,
+  Box,
+  Button,
+  Pagination,
+} from "@mui/material";
 import History from "./History";
 import axios from "axios";
 
 import { NETWORK_URL } from "../links";
 
+const categories = ["laptop", "iphone", "camera", "clock", "watch"];
 const Panel = (props) => {
+
   const [dataList, setDataList] = useState([]);
-  const [currentCategory, setCurrentCategory] = useState("laptop");
+  const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [isZero, setIsZero] = useState(false);
   const [fetching, setFetching] = useState(false);
 
-  const fetchData = useCallback((index) => {
-    let categories = ["laptop", "iphone", "camera", "clock", "watch"];
-    setCurrentCategory(categories[index]);
+  // const { category, subCategory } = useParams();
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageCount, setPageCount] = useState(0);
+
+  const fetchData = useCallback((index, pageNumber) => {
     setDataList([]);
     setFetching(true);
     axios
-      .get(`${NETWORK_URL}/seller/panel/${categories[index]}`)
+      .get(`${NETWORK_URL}/seller/panel/${categories[index]}/${pageNumber}`)
       .then((response) => response.data)
       .then((data) => {
-        if (data.length > 0) {
-          setDataList([...data]);
+        if (data.product_list.length > 0) {
+          setDataList([...data.product_list]);
         }
-        setIsZero(data.length > 0);
+        setIsZero(data.product_list.length > 0);
         setFetching(false);
+        setPageCount(data.number_of_pages);
       })
       .catch((error) => {
         alert("something went wrong");
@@ -32,64 +44,94 @@ const Panel = (props) => {
       });
   }, []);
 
+  const upDatePageNumber = (event, value) => {
+    if (value !== pageNumber) {
+      setPageNumber(value);
+      fetchData(currentCategoryIndex, value);
+    }
+  };
+
   useEffect(() => {
     if (window.localStorage.getItem("idToken")) {
-      fetchData(0);
+      fetchData(currentCategoryIndex, pageNumber);
     }
     return () => {
       setDataList([]);
     };
-  }, [fetchData]);
+  }, [fetchData, setCurrentCategoryIndex,currentCategoryIndex,pageNumber]);
 
   return (
-    <Box sx={{ mt: "2rem" }}>
+    <Box sx={{ my: "2rem" }}>
       <>
         {" "}
         <Box component="center" sx={{ my: "1rem" }}>
           <Button
             onClick={() => {
-              fetchData(0);
+              setCurrentCategoryIndex(0);
+              fetchData(0, pageNumber);
             }}
             variant="text"
-            disabled={ currentCategory === "laptop" }
+            disabled={currentCategoryIndex === 0}
           >
             Laptop
           </Button>
           <Button
             onClick={() => {
-              fetchData(1);
+              setCurrentCategoryIndex(1);
+              fetchData(1, pageNumber);
             }}
-            disabled={ currentCategory === "iphone" }
+            disabled={currentCategoryIndex === 1}
           >
             iPhone
           </Button>
           <Button
             onClick={() => {
-              fetchData(2);
+              setCurrentCategoryIndex(2);
+              fetchData(2, pageNumber);
             }}
-            disabled={ currentCategory === "camera" }
+            disabled={currentCategoryIndex === 2}
           >
             Camera
           </Button>
           <Button
             onClick={() => {
-              fetchData(3);
+              setCurrentCategoryIndex(3);
+              fetchData(3, pageNumber);
             }}
-            disabled={ currentCategory === "clock" }
+            disabled={currentCategoryIndex === 3}
           >
             Clock
           </Button>
           <Button
             onClick={() => {
-              fetchData(4);
+              setCurrentCategoryIndex(4);
+              fetchData(4, pageNumber);
             }}
-            disabled={ currentCategory === "watch" }
+            disabled={currentCategoryIndex === 4}
           >
             watch
           </Button>
         </Box>
       </>
-
+      <Box
+        sx={{
+          my: "1rem",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Pagination
+          count={pageCount}
+          defaultPage={1}
+          color="primary"
+          variant="outlined"
+          shape="rounded"
+          showFirstButton={true}
+          showLastButton={true}
+          onChange={upDatePageNumber}
+        />
+      </Box>
       {fetching ? (
         <>
           <Box
@@ -98,6 +140,7 @@ const Panel = (props) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              mx: "3rem",
             }}
           >
             <Typography variant="h5">Fetching your products &nbsp;</Typography>
@@ -144,18 +187,19 @@ const Panel = (props) => {
                       item={item}
                       key={item.key}
                       fetchData={fetchData}
-                      category={currentCategory}
+                      category={categories[currentCategoryIndex]}
+                      pageNumber={pageNumber}
                     />
                   );
                 })}
               </Grid>
+        
             </>
           ) : (
             <></>
           )}
         </>
       )}
-
     </Box>
   );
 };

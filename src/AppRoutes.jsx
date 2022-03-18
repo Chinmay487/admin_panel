@@ -15,7 +15,7 @@ const AppRoutes = () => {
         <>
           <Route
             exact={true}
-            path="/update/:key"
+            path="/update/:category/:key"
             element={<ProductForm isUpdate={true} />}
           />
 

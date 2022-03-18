@@ -16,7 +16,7 @@ import axios from "axios";
 import { NETWORK_URL } from "../links";
 
 const Form = (props) => {
-  const { key } = useParams();
+  const { category,key } = useParams();
   const navigate = useNavigate();
   const theme = useTheme();
   const [productData, setProductData] = useState({
@@ -25,7 +25,7 @@ const Form = (props) => {
     price: "",
     discount_price: "",
     quantity: 10,
-    category: "",
+    category: category,
   });
 
   const [thumbnail, setThumbnail] = useState(null);

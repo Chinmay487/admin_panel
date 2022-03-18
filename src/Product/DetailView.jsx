@@ -12,6 +12,7 @@ import Review from "./Review";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { NETWORK_URL } from "../links";
+import ImageSlider from "./ImageSlider";
 
 const DetailView = (props) => {
   const { category,key } = useParams();
@@ -67,7 +68,6 @@ const DetailView = (props) => {
     productImages: [],
   });
 
-  const [index, setIndex] = useState(0);
   const [fetchStatus, setFetchStatus] = useState(true);
 
   const fetchData = useCallback(
@@ -95,27 +95,21 @@ const DetailView = (props) => {
     [key,category]
   );
 
-  const getTimeInterval = useCallback((isMounted) => {
-    if (isMounted) {
-      setInterval(() => {
-        const l = productData.productImages.length;
-        if (l > 0 ) {
-          setIndex((oldIndex) => {
-            return (oldIndex + 1) % l;
-          });
-        }
-      }, 6000);
-    }
-  },[productData.productImages.length]);
-
   useEffect(() => {
     let isMounted = true;
     fetchData(isMounted);
-    getTimeInterval(isMounted);
     return () => {
       isMounted = true;
+      setProductData({
+        title: "",
+        description: "",
+        price: "",
+        discountPrice: "",
+        quantity: "",
+        productImages: [],
+      })
     };
-  }, [fetchData,getTimeInterval]);
+  }, [fetchData]);
 
   const navigate = useNavigate();
 
@@ -146,14 +140,15 @@ const DetailView = (props) => {
             <Grid item md={12}>
               <Grid container columnGap={3}>
                 <Grid item md={4.5} sm={12} xs={12}>
-                  <Box
+                  {/* <Box
                     component="img"
                     src={productData.productImages[index]}
                     sx={{
                       maxWidth: "100%",
                       height: "27rem",
                     }}
-                  />
+                  /> */}
+                  <ImageSlider productImages={productData.productImages} />
                 </Grid>
                 <Grid item md={7} sm={12} xs={12}>
                   <Box

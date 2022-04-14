@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { NETWORK_URL } from "../links";
 import ReviewCard from "./ReviewCard";
 
-// viewreview
+
 const ReviewPage = () => {
   const { category,key } = useParams();
   const [fetchStatus, setFetchStatus] = useState(false);
@@ -18,14 +18,14 @@ const ReviewPage = () => {
       .get(`${NETWORK_URL}/client/viewreview/${category}/${key}`)
       .then((response) => {
         setNoReview(response.data.length === 0);
-        // console.log(response.data);
+
         setReviewArray([...response.data]);
         setFetchStatus(false);
       })
       .catch((error) => {
         alert("something went wrong");
       });
-  }, [key]);
+  }, [key,category]);
 
   useEffect(() => {
     fetchReviews();

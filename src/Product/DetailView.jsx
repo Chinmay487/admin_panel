@@ -140,14 +140,7 @@ const DetailView = (props) => {
             <Grid item md={12}>
               <Grid container columnGap={3}>
                 <Grid item md={4.5} sm={12} xs={12}>
-                  {/* <Box
-                    component="img"
-                    src={productData.productImages[index]}
-                    sx={{
-                      maxWidth: "100%",
-                      height: "27rem",
-                    }}
-                  /> */}
+                  
                   <ImageSlider productImages={productData.productImages} />
                 </Grid>
                 <Grid item md={7} sm={12} xs={12}>
@@ -203,7 +196,7 @@ const DetailView = (props) => {
                       >
                         Update
                       </Button>
-                      {/* ) : null} */}
+                      
                     </Box>
                   </Box>
                 </Grid>

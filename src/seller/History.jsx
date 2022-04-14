@@ -44,19 +44,7 @@ const History = (props) => {
     },
   };
 
-  // const quantity = {
-  //   px: {
-  //     lg: "0",
-  //     md: "0",
-  //     sm: "5%",
-  //     xs: "5%",
-  //   },
-  //   py: "2%",
-  //   width: "100%",
-  //   display: "flex",
-  //   justifyContent: "flex-start",
-  //   alignItems: "center",
-  // };
+
 
   const cartButtons = {
     width: "100%",
@@ -85,7 +73,7 @@ const History = (props) => {
     data.append("category",props.category);
     data.append("idToken",window.localStorage.getItem("idToken"))
     axios
-      .post(`${NETWORK_URL}/seller/deleteproduct/${props.pageNumber}`, data)
+      .post(`${NETWORK_URL}/seller/deleteproduct`, data)
       .then((response) => {
         setDeleteButtonState(false);
         props.fetchData(0,props.pageNumber)

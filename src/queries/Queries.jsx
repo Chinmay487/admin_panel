@@ -24,7 +24,7 @@ const Queries = () => {
           idToken: window.localStorage.getItem("idToken"),
         })
         .then((response) => {
-          // console.log(response.data)
+          
           if (response.data.length > 0) {
             
             setShippingData([...response.data]);

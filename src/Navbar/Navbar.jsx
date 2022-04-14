@@ -101,7 +101,6 @@ const Navbar = () => {
               },
               margin: "auto 1rem",
               alignItems: "center",
-              // border: "1px solid green",
             }}
           >
             <Box component="li" sx={{ marginLeft: "1rem" }}>

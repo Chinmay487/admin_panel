@@ -35,7 +35,6 @@ const QueryDetail = (props) => {
     axios
       .post(`${NETWORK_URL}/seller/delivered`, {
         idToken: window.localStorage.getItem("idToken"),
-        // order_date_by_seller: deliveryDate,
         user_data: props.item,
       })
       .then((response) => {

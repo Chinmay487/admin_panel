@@ -20,7 +20,6 @@ const Panel = (props) => {
   const [isZero, setIsZero] = useState(false);
   const [fetching, setFetching] = useState(false);
 
-  // const { category, subCategory } = useParams();
   const [pageNumber, setPageNumber] = useState(1);
   const [pageCount, setPageCount] = useState(0);
 
